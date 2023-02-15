@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: 1.0.0
+  vmImage: Dev.deb11-jbm
 
 stages:
 - stage: Build
