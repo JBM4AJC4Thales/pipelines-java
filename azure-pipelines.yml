@@ -16,7 +16,12 @@ jobs:
     name:  dev
     resourceType: VirtualMachine
     tags: deb11_jbm # Update or remove value to match your tag
-  # strategy:
+  strategy:
+    runOnce:
+      deploy:
+        steps:
+        - script: echo my first deployment
+  
 
 # stages:
 # - stage: Build
