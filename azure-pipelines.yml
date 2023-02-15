@@ -7,24 +7,33 @@ trigger:
 - main
 
 pool:
-  vmImage: deb11-jbm
+  vmImage: ubuntu-latest
 
-stages:
-- stage: Build
-  displayName: Build stage
-  jobs:  
-  - job: Build
-    displayName: Build Maven Project
-    steps:
-    - task: Maven@4
-      displayName: 'Maven Package'
-      inputs:
-        mavenPomFile: 'pom.xml'
-    - task: CopyFiles@2
-      displayName: 'Copy Files to artifact staging directory'
-      inputs:
-        SourceFolder: '$(System.DefaultWorkingDirectory)'
-        Contents: '**/target/*.?(war|jar)'
-        TargetFolder: $(Build.ArtifactStagingDirectory)
-    - upload: $(Build.ArtifactStagingDirectory)
-      artifact: drop
+jobs:  
+- deployment: VMDeploy
+  displayName: Web deploy
+  environment:
+    name:  dev
+    resourceType: VirtualMachine
+    tags: deb11_jbm # Update or remove value to match your tag
+  # strategy:
+
+# stages:
+# - stage: Build
+#   displayName: Build stage
+#   jobs:  
+#   - job: Build
+#     displayName: Build Maven Project
+#     steps:
+#     - task: Maven@4
+#       displayName: 'Maven Package'
+#       inputs:
+#         mavenPomFile: 'pom.xml'
+#     - task: CopyFiles@2
+#       displayName: 'Copy Files to artifact staging directory'
+#       inputs:
+#         SourceFolder: '$(System.DefaultWorkingDirectory)'
+#         Contents: '**/target/*.?(war|jar)'
+#         TargetFolder: $(Build.ArtifactStagingDirectory)
+#     - upload: $(Build.ArtifactStagingDirectory)
+#       artifact: drop
